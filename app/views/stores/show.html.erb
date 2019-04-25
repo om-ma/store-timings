@@ -33,9 +33,9 @@
           <% available_slots.each do |al| %>
             <% single_splited_slots = al.split("-") %>
             
-            <% first =  single_splited_slots.first.to_time.strftime("%H:%M")%>
-            <% last  =  single_splited_slots.size > 1 ?  single_splited_slots.second.to_time.strftime("%H:%M") : ""%>
-            <% converted_time =  first + "-" + last %>
+            <% first =  single_splited_slots.first.to_time.present? ? single_splited_slots.first.to_time.strftime("%H:%M") : single_splited_slots.first %>
+            <% last  =  (single_splited_slots.size > 1) && single_splited_slots.second.to_time.present? ?  single_splited_slots.second.to_time.strftime("%H:%M") : single_splited_slots.second%>
+            <% converted_time =  first.to_s + "-" + last.to_s %>
             <% final_slots_array.push(converted_time) %>
           <% end %>
           <td><%= final_slots_array.join(",") %></td>
