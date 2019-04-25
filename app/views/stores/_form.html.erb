@@ -1,0 +1,59 @@
+<%= form_with(model: store, local: true) do |form| %>
+  <% if store.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(store.errors.count, "error") %> prohibited this store from being saved:</h2>
+
+      <ul>
+      <% store.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :store_name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :monday_hours %>
+    <%= form.text_field :monday_hrs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tuesday_hours %>
+    <%= form.text_field :tuesday_hrs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :wednesday_hours %>
+    <%= form.text_field :wednesday_hrs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :thursday_hours %>
+    <%= form.text_field :thursday_hrs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :friday_hours %>
+    <%= form.text_field :friday_hrs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :saturday_hours %>
+    <%= form.text_field :saturday_hrs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sunday_hours %>
+    <%= form.text_field :sunday_hrs %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+

@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_tag store_path(@store), method: :get do %>
+<%= select_tag 'locale', options_for_select([[t(:english), 'en'], [t(:french), 'fr']],
+  selected: params[:locale]) %>
+<%= submit_tag 'Change Time Format'%>
+<% end %>
+
+<div>
+  <span><h1>Store Name: <%= @store.name %></h1></span>
+</div>
+
+
+<%  days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] %>
+
+<%  sorted_days_array = days.rotate(days.index(Time.now.strftime("%A"))) %>
+<%  current_day = Time.now.strftime("%A") %>
+
+
+<table class="table">
+  <tbody>
+    <% sorted_days_array.each do |day| %>
+      <tr>
+        <% if (day ==  current_day) %>
+           <td><strong><%= day.upcase %></strong></td>
+        <% else %>
+           <td><%= day.upcase %></td>
+        <% end %>
+        <% if I18n.locale == :fr %>
+          <% final_slots_array = [] %>
+          <% available_slots = @store.send(day.downcase + "_hrs").split(",") %>
+          
+          <% available_slots.each do |al| %>
+            <% single_splited_slots = al.split("-") %>
+            
+            <% first =  single_splited_slots.first.to_time.strftime("%H:%M")%>
+            <% last  =  single_splited_slots.size > 1 ?  single_splited_slots.second.to_time.strftime("%H:%M") : ""%>
+            <% converted_time =  first + "-" + last %>
+            <% final_slots_array.push(converted_time) %>
+          <% end %>
+          <td><%= final_slots_array.join(",") %></td>
+        <% else %>
+          <td><%= @store.send(day.downcase + "_hrs") %></td>
+        <% end %>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Edit', edit_store_path(@store) %> |
+<%= link_to 'Back', stores_path %>
