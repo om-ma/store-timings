@@ -26,6 +26,8 @@
         <% else %>
            <td><%= day.upcase %></td>
         <% end %>
+
+
         <% if I18n.locale == :fr %>
           <% final_slots_array = [] %>
           <% available_slots = @store.send(day.downcase + "_hrs").split(",") %>
@@ -38,9 +40,18 @@
             <% converted_time =  first.to_s + "-" + last.to_s %>
             <% final_slots_array.push(converted_time) %>
           <% end %>
-          <td><%= final_slots_array.join(",") %></td>
+          <% if (day ==  current_day) %>
+            <td><strong><%= final_slots_array.join(",") %></strong></td>
+          <% else %>
+            <td><%= final_slots_array.join(",") %></td>
+          <% end %>
+
         <% else %>
-          <td><%= @store.send(day.downcase + "_hrs") %></td>
+          <% if (day ==  current_day) %>
+            <td><strong><%= @store.send(day.downcase + "_hrs") %></strong></td>
+          <% else %>
+            <td><%= @store.send(day.downcase + "_hrs") %></td>
+          <% end %>
         <% end %>
         
       </tr>
